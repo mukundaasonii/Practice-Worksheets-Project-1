@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧩 Jumbled Numbers Divisibility Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Baloo 2', cursive;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+            color: #333;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .detective-icon {
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .intro-text {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            margin-top: 20px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .section:nth-child(even) {
+            border-left-color: #2196F3;
+        }
+
+        .section:nth-child(3n) {
+            border-left-color: #FF9800;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .rule-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #e9ecef;
+            transition: transform 0.2s;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-2px);
+            border-color: #4CAF50;
+        }
+
+        .rule-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .jumbled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .jumbled-table th {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .jumbled-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 1.1rem;
+        }
+
+        .jumbled-table tr:nth-child(even) {
+            background: #f0f8ff;
+        }
+
+        .jumbled-table tr:nth-child(odd) {
+            background: #fff8f0;
+        }
+
+        .jumbled-input {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 1rem;
+            text-align: center;
+            width: 80px;
+        }
+
+        .jumbled-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .checkbox-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-checkbox {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .custom-checkbox input {
+            opacity: 0;
+            position: absolute;
+        }
+
+        .custom-checkbox .checkmark {
+            width: 25px;
+            height: 25px;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .custom-checkbox input:checked + .checkmark {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+        }
+
+        .rules-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .rules-table th {
+            background: #2196F3;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .rules-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 1.1rem;
+        }
+
+        .rules-table tr:nth-child(even) {
+            background: #e3f2fd;
+        }
+
+        .maze-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .maze-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .maze-cell {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .maze-cell.wall {
+            background: #666;
+            color: white;
+        }
+
+        .maze-cell.path {
+            background: #e8f5e8;
+            border: 2px solid #4CAF50;
+        }
+
+        .maze-cell.start {
+            background: #ffeb3b;
+            border: 2px solid #f57f17;
+        }
+
+        .maze-cell.end {
+            background: #ff5722;
+            color: white;
+            border: 2px solid #d84315;
+        }
+
+        .maze-cell.selected {
+            background: #4CAF50;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .maze-cell.correct-path {
+            background: #81c784;
+            color: white;
+        }
+
+        .reflection-section {
+            background: linear-gradient(135deg, #FFD54F, #FF9800);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .badge-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .detective-badge {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 5px solid #FFD54F;
+        }
+
+        .reflection-input {
+            background: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 500px;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .total-input {
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            width: 100px;
+            margin: 10px;
+        }
+
+        .btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .score {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1976d2;
+        }
+
+        .pattern-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .pattern-input input {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 80px;
+            text-align: center;
+        }
+
+        .pattern-input input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .challenge-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <h1 class="title">
+                🧩 Jumbled Numbers Divisibility Challenge
+                <div class="detective-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="21 21l-4.35-4.35"></path>
+                    </svg>
+                </div>
+            </h1>
+            <div class="intro-text">
+                <strong>Are You Ready to Crack the Code of Numbers?</strong><br>
+                Welcome to the Jumbled Numbers Divisibility Challenge! Numbers have secret rules — only the sharpest minds can uncover them. Use what you know about divisibility by 2, 3, 5, and 10 to solve puzzles, find hidden patterns, and become a Divisibility Detective!
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Detective Rules Section -->
+            <section class="section">
+                <h2 class="section-title">🔍 Detective's Divisibility Rules</h2>
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <div class="rule-number">2 ⚡</div>
+                        <p>Even numbers end in 0, 2, 4, 6, or 8</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-number">3 🎲</div>
+                        <p>Sum of digits is divisible by 3</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-number">5 💫</div>
+                        <p>Numbers end in 0 or 5</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-number">10 🚀</div>
+                        <p>Numbers end in 0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section One: Decode the Jumbled Numbers -->
+            <section class="section">
+                <h2 class="section-title">🔤 Section One – Decode the Jumbled Numbers</h2>
+                <p>Unscramble these numbers and check which divisibility rules they follow!</p>
+                
+                <table class="jumbled-table">
+                    <thead>
+                        <tr>
+                            <th>Jumbled Number</th>
+                            <th>Unscrambled</th>
+                            <th>⚡ Divisible by 2</th>
+                            <th>🎲 Divisible by 3</th>
+                            <th>💫 Divisible by 5</th>
+                            <th>🚀 Divisible by 10</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>4-2-8</strong></td>
+                            <td><input type="number" class="jumbled-input" id="unscramble1" placeholder="???"></td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div2_1">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div3_1">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div5_1">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div10_1">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>5-4-9</strong></td>
+                            <td><input type="number" class="jumbled-input" id="unscramble2" placeholder="???"></td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div2_2">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div3_2">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div5_2">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div10_2">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>0-6-3</strong></td>
+                            <td><input type="number" class="jumbled-input" id="unscramble3" placeholder="???"></td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div2_3">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div3_3">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div5_3">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div10_3">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>7-5-1</strong></td>
+                            <td><input type="number" class="jumbled-input" id="unscramble4" placeholder="???"></td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div2_4">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div3_4">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div5_4">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div10_4">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>0-9-2</strong></td>
+                            <td><input type="number" class="jumbled-input" id="unscramble5" placeholder="???"></td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div2_5">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div3_5">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div5_5">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox-container">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="div10_5">
+                                        <span class="checkmark">✓</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="btn" onclick="checkJumbledAnswers()">Check My Answers! 🔍</button>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+            </section>
+
+            <!-- Section Two: Find the Missing Number -->
+            <section class="section">
+                <h2 class="section-title">💡 Section Two – Which Numbers Fit These Rules?</h2>
+                <p>Use your detective skills to find numbers that match each rule! 🧠✨</p>
+                
+                <table class="rules-table">
+                    <thead>
+                        <tr>
+                            <th>Rule</th>
+                            <th>Example</th>
+                            <th>Your Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Divisible by 2 AND 5</strong></td>
+                            <td>20, 30, 40...</td>
+                            <td><input type="number" class="jumbled-input" id="rule1" placeholder="??"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Divisible by 3 AND 5</strong></td>
+                            <td>15, 30, 45...</td>
+                            <td><input type="number" class="jumbled-input" id="rule2" placeholder="??"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Divisible by 2, 3, AND 5</strong></td>
+                            <td>30, 60, 90...</td>
+                            <td><input type="number" class="jumbled-input" id="rule3" placeholder="??"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="btn" onclick="checkRuleAnswers()">Check My Rules! 💡</button>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+            </section>
+
+            <!-- Section Three: Divisibility Maze -->
+            <section class="section">
+                <h2 class="section-title">🗺️ Step 3: Find the Path!</h2>
+                <p>Navigate through the maze by clicking only on numbers divisible by 3 OR 5. Start at 🟡 and reach 🔴!</p>
+                
+                <div class="maze-container">
+                    <div class="maze-grid" id="maze-grid">
+                        <div class="maze-cell start" data-number="START">🟡</div>
+                        <div class="maze-cell path" data-number="12">12</div>
+                        <div class="maze-cell wall" data-number="7">7</div>
+                        <div class="maze-cell path" data-number="15">15</div>
+                        <div class="maze-cell wall" data-number="8">8</div>
+                        <div class="maze-cell path" data-number="9">9</div>
+                        <div class="maze-cell wall" data-number="11">11</div>
+                        
+                        <div class="maze-cell wall" data-number="4">4</div>
+                        <div class="maze-cell path" data-number="18">18</div>
+                        <div class="maze-cell wall" data-number="13">13</div>
+                        <div class="maze-cell path" data-number="25">25</div>
+                        <div class="maze-cell wall" data-number="14">14</div>
+                        <div class="maze-cell path" data-number="21">21</div>
+                        <div class="maze-cell wall" data-number="16">16</div>
+                        
+                        <div class="maze-cell wall" data-number="2">2</div>
+                        <div class="maze-cell path" data-number="27">27</div>
+                        <div class="maze-cell wall" data-number="19">19</div>
+                        <div class="maze-cell path" data-number="30">30</div>
+                        <div class="maze-cell wall" data-number="22">22</div>
+                        <div class="maze-cell path" data-number="33">33</div>
+                        <div class="maze-cell wall" data-number="26">26</div>
+                        
+                        <div class="maze-cell wall" data-number="1">1</div>
+                        <div class="maze-cell path" data-number="36">36</div>
+                        <div class="maze-cell wall" data-number="23">23</div>
+                        <div class="maze-cell path" data-number="35">35</div>
+                        <div class="maze-cell wall" data-number="28">28</div>
+                        <div class="maze-cell path" data-number="39">39</div>
+                        <div class="maze-cell end" data-number="END">🔴</div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <p><strong>Add up all the numbers in your path:</strong></p>
+                        <input type="number" class="total-input" id="maze-total" placeholder="Total">
+                        <br>
+                        <button class="btn" onclick="checkMazePath()">Check My Path! 🗺️</button>
+                        <button class="btn" onclick="resetMaze()">Reset Maze</button>
+                    </div>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+            </section>
+
+            <!-- Reflection Section -->
+            <section class="reflection-section">
+                <h2 style="font-family: 'Fredoka One', cursive; margin-bottom: 20px;">⭐ Great work, Detective!</h2>
+                
+                <div class="badge-container">
+                    <div class="detective-badge">
+                        <div style="font-size: 2rem;">🕵️‍♂️</div>
+                        <div style="font-size: 0.9rem; font-weight: bold; color: #FF9800;">DIVISIBILITY</div>
+                        <div style="font-size: 0.8rem; font-weight: bold; color: #FF9800;">DETECTIVE</div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">Write one new thing you learned today:</p>
+                
+                <textarea class="reflection-input" placeholder="I learned that..." rows="3"></textarea>
+                
+                <p style="margin-top: 20px; font-size: 1rem;">🎨 Color in your Divisibility Detective badge above!</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        let mazeSelectedPath = [];
+        let mazeStarted = false;
+
+        // Section 1: Jumbled Numbers
+        function checkJumbledAnswers() {
+            const answers = [
+                {number: 842, div2: true, div3: false, div5: false, div10: false}, // 4-2-8 = 842
+                {number: 954, div2: true, div3: true, div5: false, div10: false},  // 5-4-9 = 954
+                {number: 630, div2: true, div3: true, div5: true, div10: true},    // 0-6-3 = 630
+                {number: 751, div2: false, div3: false, div5: false, div10: false}, // 7-5-1 = 751
+                {number: 920, div2: true, div3: false, div5: true, div10: true}    // 0-9-2 = 920
+            ];
+
+            let correct = 0;
+            let total = answers.length * 5; // 5 checks per row
+
+            for (let i = 1; i <= 5; i++) {
+                const userNumber = parseInt(document.getElementById(`unscramble${i}`).value);
+                const answer = answers[i-1];
+                
+                // Check unscrambled number
+                if (userNumber === answer.number) correct++;
+                
+                // Check divisibility checkboxes
+                const div2Checked = document.getElementById(`div2_${i}`).checked;
+                const div3Checked = document.getElementById(`div3_${i}`).checked;
+                const div5Checked = document.getElementById(`div5_${i}`).checked;
+                const div10Checked = document.getElementById(`div10_${i}`).checked;
+                
+                if (div2Checked === answer.div2) correct++;
+                if (div3Checked === answer.div3) correct++;
+                if (div5Checked === answer.div5) correct++;
+                if (div10Checked === answer.div10) correct++;
+            }
+
+            const feedback = document.getElementById('feedback1');
+            feedback.style.display = 'block';
+            
+            if (correct === total) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '🎉 Perfect detective work! All numbers unscrambled and divisibility rules identified correctly!';
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = `Good effort! You got ${correct} out of ${total} correct. Check your unscrambled numbers and divisibility rules.`;
+            }
+        }
+
+        // Section 2: Rules
+        function checkRuleAnswers() {
+            const rule1 = parseInt(document.getElementById('rule1').value);
+            const rule2 = parseInt(document.getElementById('rule2').value);
+            const rule3 = parseInt(document.getElementById('rule3').value);
+            
+            const feedback = document.getElementById('feedback2');
+            feedback.style.display = 'block';
+            
+            let correct = 0;
+            let messages = [];
+            
+            // Rule 1: Divisible by 2 AND 5 (must end in 0)
+            if (rule1 && rule1 % 2 === 0 && rule1 % 5 === 0) {
+                correct++;
+                messages.push(`✓ ${rule1} is divisible by both 2 and 5!`);
+            } else if (rule1) {
+                messages.push(`✗ ${rule1} is not divisible by both 2 and 5.`);
+            }
+            
+            // Rule 2: Divisible by 3 AND 5
+            if (rule2 && rule2 % 3 === 0 && rule2 % 5 === 0) {
+                correct++;
+                messages.push(`✓ ${rule2} is divisible by both 3 and 5!`);
+            } else if (rule2) {
+                messages.push(`✗ ${rule2} is not divisible by both 3 and 5.`);
+            }
+            
+            // Rule 3: Divisible by 2, 3, AND 5
+            if (rule3 && rule3 % 2 === 0 && rule3 % 3 === 0 && rule3 % 5 === 0) {
+                correct++;
+                messages.push(`✓ ${rule3} is divisible by 2, 3, and 5!`);
+            } else if (rule3) {
+                messages.push(`✗ ${rule3} is not divisible by all three numbers.`);
+            }
+            
+            if (correct === 3) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '🎉 Excellent! You found numbers that fit all the rules perfectly!';
+            } else {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = messages.join('<br>') + '<br>💡 Hint: Numbers divisible by both 2 and 5 must end in 0!';
+            }
+        }
+
+        // Section 3: Maze
+        document.getElementById('maze-grid').addEventListener('click', function(e) {
+            if (e.target.classList.contains('maze-cell')) {
+                const number = e.target.dataset.number;
+                
+                if (number === 'START') {
+                    // Reset and start
+                    resetMaze();
+                    mazeStarted = true;
+                    e.target.classList.add('selected');
+                    return;
+                }
+                
+                if (number === 'END') {
+                    if (mazeStarted && mazeSelectedPath.length > 0) {
+                        e.target.classList.add('selected');
+                        calculateMazeTotal();
+                    }
+                    return;
+                }
+                
+                if (!mazeStarted) return;
+                
+                const num = parseInt(number);
+                
+                // Check if divisible by 3 or 5
+                if (num % 3 === 0 || num % 5 === 0) {
+                    if (!e.target.classList.contains('selected')) {
+                        e.target.classList.add('selected');
+                        mazeSelectedPath.push(num);
+                    }
+                } else {
+                    // Wrong path - visual feedback
+                    e.target.style.background = '#ff5252';
+                    setTimeout(() => {
+                        e.target.style.background = '';
+                    }, 500);
+                }
+            }
+        });
+
+        function calculateMazeTotal() {
+            const total = mazeSelectedPath.reduce((sum, num) => sum + num, 0);
+            document.getElementById('maze-total').value = total;
+        }
+
+        function checkMazePath() {
+            const userTotal = parseInt(document.getElementById('maze-total').value);
+            const correctPath = [12, 15, 9, 18, 25, 21, 27, 30, 33, 36, 35, 39]; // One possible correct path
+            const correctTotal = correctPath.reduce((sum, num) => sum + num, 0);
+            
+            const feedback = document.getElementById('feedback3');
+            feedback.style.display = 'block';
+            
+            // Check if user found a valid path (any path through numbers divisible by 3 or 5)
+            const validPath = mazeSelectedPath.every(num => num % 3 === 0 || num % 5 === 0);
+            
+            if (validPath && mazeSelectedPath.length >= 6 && userTotal > 0) {
+                feedback.className = 'feedback success';
+                feedback.textContent = `🎉 Great pathfinding! You navigated through ${mazeSelectedPath.length} numbers with a total of ${userTotal}!`;
+                
+                // Highlight the path
+                document.querySelectorAll('.maze-cell.selected').forEach(cell => {
+                    if (!cell.classList.contains('start') && !cell.classList.contains('end')) {
+                        cell.classList.add('correct-path');
+                    }
+                });
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = 'Make sure you start at 🟡, only click numbers divisible by 3 OR 5, and reach 🔴!';
+            }
+        }
+
+        function resetMaze() {
+            mazeSelectedPath = [];
+            mazeStarted = false;
+            document.getElementById('maze-total').value = '';
+            document.querySelectorAll('.maze-cell').forEach(cell => {
+                cell.classList.remove('selected', 'correct-path');
+            });
+            document.getElementById('feedback3').style.display = 'none';
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'995129b5a2e129f5',t:'MTc2MTU1NzMwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
